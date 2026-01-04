@@ -7,3 +7,6 @@ ucimlrepo
 mlflow
 joblib
 pytest
+flake8
+onnx
+skl2onnx
