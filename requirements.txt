@@ -1,6 +1,6 @@
 pandas
 numpy
-scikit-learn
+scikit-learn==1.6.1
 matplotlib
 seaborn
 ucimlrepo
@@ -10,3 +10,5 @@ pytest
 flake8
 onnx
 skl2onnx
+flask
+prometheus-client
