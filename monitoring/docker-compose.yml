@@ -1,16 +1,10 @@
 version: "3.8"
 services:
   api:
-    build: 
-      context: ../docker  # ← Point to docker folder
-      dockerfile: Dockerfile
+    build: .
     container_name: heart-api
     ports:
       - "8080:5001"
-    volumes:
-      - ../models:/app/models  # ← Mount models
-      - ../app:/app            # ← Mount app code
-      - ../docker:/app 
 
   prometheus:
     image: prom/prometheus
