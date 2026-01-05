@@ -3,11 +3,9 @@ kind: Service
 metadata:
   name: heart-disease-service
 spec:
-  type: NodePort
+  type: LoadBalancer
   selector:
     app: heart-disease-api
   ports:
-    - protocol: TCP
-      port: 80
-      targetPort: 8000
-      nodePort: 30007
+    - port: 5001
+      targetPort: 5001
