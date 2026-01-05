@@ -1,8 +1,11 @@
 #!/usr/bin/env python3
 """
 Run full training pipeline: Tasks 2, 3, 4
-Usage: python src/train.py
+Usage: python -m src.train
 """
+import sys
+import os
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from .model import train_models, log_mlflow_experiments, save_best_model
 
