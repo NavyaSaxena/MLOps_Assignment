@@ -7,13 +7,23 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
+
     - uses: actions/setup-python@v5
       with:
         python-version: '3.10'
-    - run: |
+
+    - name: Install dependencies
+      run: |
         pip install pytest pytest-cov flake8 pandas numpy scikit-learn ucimlrepo joblib
-    - run: flake8 src tests --max-line-length=120 --ignore=E203,E501,W503,F401,F841,E800,E902 --exclude=__init__.py || true
-    - run: |
+
+    - name: Lint (flake8)
+      run: |
+        flake8 src tests --max-line-length=120 \
+        --ignore=E203,E501,W503,F401,F841,E800,E902 \
+        --exclude=_init_.py || true
+
+    - name: Run tests (pytest)
+      run: |
         mkdir -p test-results
         cd tests
         python -c "
@@ -22,9 +32,18 @@ jobs:
         import pytest
         pytest.main(['-q', '--junitxml=../test-results/junit.xml', 'test_preprocessing.py'])
         "
-    - run: ls -la test-results/ || echo 'No junit.xml created'
-    - uses: actions/upload-artifact@v4
+
+    - name: Train model (generate artifacts)
+      run: |
+        python -m src.train
+
+    - name: Upload workflow artifacts
+      uses: actions/upload-artifact@v4
       if: always()
       with:
-        name: test-results
-        path: test-results/
+        name: mlops-artifacts-${{ github.run_number }}
+        path: |
+          test-results/
+          artifacts/heart_best_pipeline.pkl
+          k8s/deployment.yaml
+          k8s/service.yaml
