@@ -1,4 +1,4 @@
-name: CI - Tests & Lint
+name: CI/CD Pipeline
 
 on: [push, pull_request]
 
