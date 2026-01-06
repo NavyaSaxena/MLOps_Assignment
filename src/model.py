@@ -18,7 +18,7 @@ import os
 from .data import load_and_prepare_data
 
 def train_models():
-    """Your exact Task 2 model training code"""
+    """Task 2 model training code"""
     
     # Load data (Task 1 output)
     df, num_cols, cat_cols = load_and_prepare_data()
@@ -26,7 +26,7 @@ def train_models():
     X = df.drop(columns=["target"])
     y = df["target"]
 
-    # Your exact preprocessing pipeline
+    # Preprocessing pipeline
     numeric_features = num_cols
     categorical_features = ["sex","cp","fbs","restecg","exang","slope","ca","thal"]
 
@@ -47,7 +47,7 @@ def train_models():
 
     cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
 
-    # Logistic Regression (your exact code)
+    # Logistic Regression
     log_reg = LogisticRegression(max_iter=1000, solver="liblinear")
     log_clf = Pipeline([("preprocess", preprocessor), ("model", log_reg)])
     
@@ -68,7 +68,7 @@ def train_models():
         "roc_auc": roc_auc_score(y_test, y_proba_log),
     }
 
-    # Random Forest (your exact code)
+    # Random Forest
     rf = RandomForestClassifier(random_state=42)
     rf_clf = Pipeline([("preprocess", preprocessor), ("model", rf)])
     

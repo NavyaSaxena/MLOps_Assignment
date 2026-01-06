@@ -7,7 +7,7 @@ DEPLOYMENT_NAME = "heart-disease-api"
 LOCAL_PORT = 8080
 TARGET_PORT = 5001
 
-DOCKER_IMAGE = "2023ac05057/heart-disease-api:v3"  # change if needed
+DOCKER_IMAGE = "2023ac05057/heart-disease-api:v3" 
 
 def run(cmd):
     print(f"\n▶ Running: {cmd}")
@@ -31,7 +31,7 @@ def try_capture(cmd):
         print(f"⚠️ Verification step returned exit code {result.returncode} (continuing)")
 
 def main():
-    print("🚀 Starting End-to-End MLOps Pipeline (Task 1 → Task 8)")
+    print("Starting End-to-End MLOps Pipeline (Task 1 → Task 8)")
 
     # Task 5
     run("pytest -q")
@@ -59,7 +59,7 @@ def main():
 
     time.sleep(3)
 
-    # Optional: print one line from port-forward output
+    # print one line from port-forward output
     try:
         if pf.stdout:
             line = pf.stdout.readline().strip()
@@ -68,10 +68,10 @@ def main():
     except Exception:
         pass
 
-    # (Optional) /metrics check - keep non-blocking, but you can remove it if always 404
+    # metrics check - keep non-blocking
     try_capture(f'curl -s http://localhost:{LOCAL_PORT}/metrics')
 
-    # ✅ Batch inference: 3 curl calls (your working format)
+    # ✅ Batch inference: 3 curl calls
     predict_cmd_1 = (
         f'curl -X POST http://localhost:{LOCAL_PORT}/predict '
         f'-H "Content-Type: application/json" '
@@ -93,13 +93,13 @@ def main():
         f'\\"restecg\\":0,\\"thalach\\":120,\\"exang\\":1,\\"oldpeak\\":2.3,\\"slope\\":0,\\"ca\\":2,\\"thal\\":3}}"'
     )
 
-    print("\n📌 Batch Inference - Sample 1")
+    print("\n Batch Inference - Sample 1")
     try_capture(predict_cmd_1)
 
-    print("\n📌 Batch Inference - Sample 2")
+    print("\n Batch Inference - Sample 2")
     try_capture(predict_cmd_2)
 
-    print("\n📌 Batch Inference - Sample 3")
+    print("\n Batch Inference - Sample 3")
     try_capture(predict_cmd_3)
 
     print("\n▶ Stopping port-forward...")

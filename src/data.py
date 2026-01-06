@@ -4,12 +4,12 @@ import os
 from ucimlrepo import fetch_ucirepo
 
 def ensure_dirs():
-    """Create data directories"""
+    """Creating data directories"""
     os.makedirs("data/raw", exist_ok=True)
     os.makedirs("data/processed", exist_ok=True)
 
 def download_raw_data():
-    """Download raw UCI Heart Disease dataset"""
+    """Downloading raw UCI Heart Disease dataset"""
     ensure_dirs()
     
     heart = fetch_ucirepo(id=45)
@@ -18,7 +18,7 @@ def download_raw_data():
     # Save raw data
     raw_path = "data/raw/heart_disease_uci.csv"
     raw_df.to_csv(raw_path, index=False)
-    print(f"✅ Raw data saved: {raw_path}")
+    print(f"Raw data saved: {raw_path}")
     return raw_df
 
 # def load_and_prepare_data():
@@ -59,10 +59,10 @@ def load_and_prepare_data(use_cached=True):
     
     # Download if no raw data
     if not os.path.exists(raw_path):
-        print("📥 Downloading raw data...")
+        print("Downloading raw data...")
         raw_df = download_raw_data()
     else:
-        print("📂 Loading cached raw data...")
+        print("Loading cached raw data...")
         raw_df = pd.read_csv(raw_path)
     
     # Use only 14 standard attributes
@@ -88,9 +88,9 @@ def load_and_prepare_data(use_cached=True):
     # Cache cleaned data
     if not os.path.exists(processed_path):
         df.to_csv(processed_path, index=False)
-        print(f"✅ Cleaned data saved: {processed_path}")
+        print(f"Cleaned data saved: {processed_path}")
     else:
-        print(f"📂 Using cached cleaned data: {processed_path}")
+        print(f"Using cached cleaned data: {processed_path}")
     
     return df, num_cols, cat_cols[:-1]  # Remove 'num' from cat_cols
 
