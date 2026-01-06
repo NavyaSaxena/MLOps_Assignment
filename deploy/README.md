@@ -21,7 +21,7 @@ Complete monitoring stack for the heart disease prediction API with:
 
 3. Access Dashboards
 |Service   |        URL          |Credentials
-|API	   |http://localhost:5001|/predict endpoint
+|API	     |http://localhost:5001|/predict endpoint
 |Prometheus|http://localhost:9090|	-
 |Grafana   |http://localhost:3000|admin/admin
 
