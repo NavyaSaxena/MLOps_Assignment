@@ -2,7 +2,7 @@ import subprocess
 import sys
 import time
 
-SERVICE_NAME = "heart-disease-service"
+SERVICE_NAME = "heart-disease-api"
 DEPLOYMENT_NAME = "heart-disease-api"
 LOCAL_PORT = 8080
 TARGET_PORT = 5001
@@ -43,8 +43,8 @@ def main():
     run(f"docker pull {DOCKER_IMAGE}")
 
     # Task 7
-    run("kubectl apply -f k8s/deployment.yaml")
-    run("kubectl apply -f k8s/service.yaml")
+    run("helm upgrade --install heart-disease-api ./k8s")
+    # run("kubectl apply -f k8s/service.yaml")
     run(f"kubectl rollout status deploy/{DEPLOYMENT_NAME} --timeout=180s")
 
     # ---- Verify endpoints inside pipeline ----

@@ -1,0 +1,53 @@
+# =================================
+# Heart Disease API Configuration
+# =================================
+replicaCount: 1
+ 
+image:
+  repository: 2023ac05057/heart-disease-api
+  tag: v3
+  pullPolicy: Always
+ 
+containerPort: 5001
+ 
+service:
+  name: heart-disease-api
+  type: LoadBalancer
+  port: 5001
+  targetPort: 5001
+ 
+ 
+# =================================
+# Prometheus Configuration
+# =================================
+prometheus:
+  name: prometheus
+  image: prom/prometheus
+ 
+  config:
+    name: prometheus-config
+    scrapeInterval: 15s
+ 
+  service:
+    name: prometheus-service
+    type: ClusterIP
+    port: 9090
+    targetPort: 9090
+ 
+ 
+# =================================
+# Grafana Configuration
+# =================================
+grafana:
+  name: grafana
+  replicaCount: 1
+  image:
+    repository: grafana/grafana
+    tag: latest
+  containerPort: 3000
+  config:
+    name: grafana-datasources
+  datasource:
+    name: Prometheus
+    url: http://prometheus-service:9090
+ 
