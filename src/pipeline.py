@@ -68,19 +68,39 @@ def main():
     except Exception:
         pass
 
-    # Optional /metrics check (non-blocking)
+    # (Optional) /metrics check - keep non-blocking, but you can remove it if always 404
     try_capture(f'curl -s http://localhost:{LOCAL_PORT}/metrics')
 
-    # ✅ Use YOUR working curl format (single-line, escaped JSON)
-    predict_cmd = (
+    # ✅ Batch inference: 3 curl calls (your working format)
+    predict_cmd_1 = (
         f'curl -X POST http://localhost:{LOCAL_PORT}/predict '
         f'-H "Content-Type: application/json" '
-        f'-d "{{\\"age\\":55,\\"sex\\":1,\\"cp\\":2,\\"trestbps\\":140,\\"chol\\":250,'
-        f'\\"fbs\\":0,\\"restecg\\":1,\\"thalach\\":150,\\"exang\\":0,\\"oldpeak\\":1.5,'
-        f'\\"slope\\":2,\\"ca\\":0,\\"thal\\":2}}"'
+        f'-d "{{\\"age\\":55,\\"sex\\":1,\\"cp\\":2,\\"trestbps\\":140,\\"chol\\":250,\\"fbs\\":0,'
+        f'\\"restecg\\":1,\\"thalach\\":150,\\"exang\\":0,\\"oldpeak\\":1.5,\\"slope\\":2,\\"ca\\":0,\\"thal\\":2}}"'
     )
 
-    try_capture(predict_cmd)
+    predict_cmd_2 = (
+        f'curl -X POST http://localhost:{LOCAL_PORT}/predict '
+        f'-H "Content-Type: application/json" '
+        f'-d "{{\\"age\\":45,\\"sex\\":0,\\"cp\\":1,\\"trestbps\\":120,\\"chol\\":210,\\"fbs\\":0,'
+        f'\\"restecg\\":1,\\"thalach\\":170,\\"exang\\":0,\\"oldpeak\\":0.2,\\"slope\\":1,\\"ca\\":0,\\"thal\\":2}}"'
+    )
+
+    predict_cmd_3 = (
+        f'curl -X POST http://localhost:{LOCAL_PORT}/predict '
+        f'-H "Content-Type: application/json" '
+        f'-d "{{\\"age\\":60,\\"sex\\":1,\\"cp\\":3,\\"trestbps\\":160,\\"chol\\":300,\\"fbs\\":1,'
+        f'\\"restecg\\":0,\\"thalach\\":120,\\"exang\\":1,\\"oldpeak\\":2.3,\\"slope\\":0,\\"ca\\":2,\\"thal\\":3}}"'
+    )
+
+    print("\n📌 Batch Inference - Sample 1")
+    try_capture(predict_cmd_1)
+
+    print("\n📌 Batch Inference - Sample 2")
+    try_capture(predict_cmd_2)
+
+    print("\n📌 Batch Inference - Sample 3")
+    try_capture(predict_cmd_3)
 
     print("\n▶ Stopping port-forward...")
     try:
