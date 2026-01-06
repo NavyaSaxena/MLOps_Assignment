@@ -15,6 +15,6 @@ spec:
       containers:
         - name: heart-disease-api
           image: 2023ac05057/heart-disease-api:v3    #navyasaxena/heart-disease-api:v1  #
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           ports:
             - containerPort: 5001
